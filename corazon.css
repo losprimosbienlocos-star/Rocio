@@ -1,0 +1,254 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+background:#000;
+
+overflow:hidden;
+
+font-family:Arial;
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+#heartContainer{
+
+position:relative;
+
+width:650px;
+
+height:650px;
+
+margin:auto;
+
+}
+
+#mensaje{
+
+position:fixed;
+
+bottom:40px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:40px;
+
+color:white;
+
+text-align:center;
+
+opacity:0;
+
+transition:1s;
+
+}
+
+#volver{
+
+position:fixed;
+
+top:20px;
+
+left:20px;
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:15px;
+
+background:#ff69b4;
+
+color:white;
+
+cursor:pointer;
+
+font-size:18px;
+
+z-index:999;
+
+}
+
+
+.foto{
+
+    position:absolute;
+
+    width:95px;
+    height:95px;
+
+    object-fit:cover;
+
+    border:6px solid white;
+
+    border-radius:8px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.45);
+
+    opacity:0;
+
+    transition:
+
+        left 1.2s ease,
+
+        top 1.2s ease,
+
+        transform 1.2s ease,
+
+        opacity .8s;
+
+}
+
+.foto:hover{
+
+transform:scale(1.15);
+
+box-shadow:
+
+0 0 30px hotpink;
+
+z-index:999;
+
+}
+.latir{
+
+animation:latir 2s infinite;
+
+}
+
+@keyframes latir{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.05);
+
+}
+
+}/*==============================
+
+EFECTO HOVER
+
+==============================*/
+
+.foto:hover{
+
+    transform:scale(1.18) rotate(0deg) !important;
+
+    z-index:999;
+
+    box-shadow:
+
+    0 0 40px hotpink,
+
+    0 0 80px deeppink;
+
+}
+
+/*==============================
+
+CORAZONES
+
+==============================*/
+
+.heartParticle{
+
+    position:absolute;
+
+    pointer-events:none;
+
+    font-size:18px;
+
+    animation:subir 2s linear forwards;
+
+}
+
+@keyframes subir{
+
+0%{
+
+opacity:1;
+
+transform:translateY(0) scale(.5);
+
+}
+
+100%{
+
+opacity:0;
+
+transform:translateY(-120px) scale(1.4);
+
+}
+
+}
+/*======================================
+PÉTALOS
+======================================*/
+
+.petal{
+
+position:fixed;
+
+pointer-events:none;
+
+z-index:500;
+
+animation:caer linear forwards;
+
+}
+
+@keyframes caer{
+
+0%{
+
+transform:translateY(-40px)
+rotate(0deg);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(110vh)
+rotate(720deg);
+
+opacity:0;
+
+}
+
+}
+
+/*======================================
+CORAZONES
+======================================*/
+
+.heartParticle{
+
+position:fixed;
+
+pointer-events:none;
+
+z-index:99999;
+
+}
+
