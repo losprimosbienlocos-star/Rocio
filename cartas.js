@@ -1,3 +1,9 @@
+const { createClient } = supabase;
+const supabaseClient = createClient(
+    window.SUPABASE_CONFIG.url,
+    window.SUPABASE_CONFIG.anonKey
+);
+
 const lettersList = document.getElementById("lettersList");
 const lettersStatus = document.getElementById("lettersStatus");
 const letterMeta = document.getElementById("letterMeta");
@@ -76,23 +82,24 @@ function createLetterButton(carta) {
 }
 
 async function loadLetters() {
-    try {
-        const response = await fetch("/api/public-cartas");
-        const payload = await response.json().catch(() => ({}));
+    lettersStatus.textContent = "Cargando cartas...";
 
-        if (!response.ok) {
-            throw new Error(payload.error || "No pude cargar las cartas");
-        }
+    const { data, error } = await supabaseClient
+        .from("cartas")
+        .select("id, titulo, resumen, contenido, fecha, publicada, orden")
+        .eq("publicada", true)
+        .order("orden", { ascending: true })
+        .order("fecha", { ascending: false });
 
-        cartas = Array.isArray(payload.cartas) ? payload.cartas : [];
-    } catch (error) {
+    if (error) {
         lettersStatus.textContent = "No pude cargar las cartas";
         letterMeta.textContent = "Error";
-        letterTitle.textContent = "Falta configurar la colección";
+        letterTitle.textContent = "No pude leer la base de datos";
         letterContent.textContent = error.message;
         return;
     }
 
+    cartas = Array.isArray(data) ? data : [];
     lettersList.innerHTML = "";
 
     cartas.forEach((carta) => {
@@ -103,11 +110,13 @@ async function loadLetters() {
 
     if (cartas.length > 0) {
         openLetter(cartas[0]);
-    } else {
-        letterMeta.textContent = "Sin cartas";
-        letterTitle.textContent = "Todavía no hay cartas";
-        letterContent.textContent = "Cuando publiques cartas desde el panel privado, aparecerán aquí.";
+        return;
     }
+
+    letterMeta.textContent = "Sin cartas";
+    letterTitle.textContent = "Todavia no hay cartas publicadas";
+    letterContent.textContent = "Revisa que la carta en Supabase tenga publicada = true.";
+    btnReplay.disabled = true;
 }
 
 btnReplay.addEventListener("click", () => {
