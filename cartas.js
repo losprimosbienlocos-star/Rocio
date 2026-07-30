@@ -1,9 +1,3 @@
-const { createClient } = supabase;
-const supabaseClient = createClient(
-    window.SUPABASE_CONFIG.url,
-    window.SUPABASE_CONFIG.anonKey
-);
-
 const lettersList = document.getElementById("lettersList");
 const lettersStatus = document.getElementById("lettersStatus");
 const letterMeta = document.getElementById("letterMeta");
@@ -82,14 +76,16 @@ function createLetterButton(carta) {
 }
 
 async function loadLetters() {
-    const { data, error } = await supabaseClient
-        .from("cartas")
-        .select("id, slug, titulo, resumen, contenido, fecha, orden")
-        .eq("publicada", true)
-        .order("orden", { ascending: true })
-        .order("fecha", { ascending: false });
+    try {
+        const response = await fetch("/api/public-cartas");
+        const payload = await response.json().catch(() => ({}));
 
-    if (error) {
+        if (!response.ok) {
+            throw new Error(payload.error || "No pude cargar las cartas");
+        }
+
+        cartas = Array.isArray(payload.cartas) ? payload.cartas : [];
+    } catch (error) {
         lettersStatus.textContent = "No pude cargar las cartas";
         letterMeta.textContent = "Error";
         letterTitle.textContent = "Falta configurar la colección";
@@ -97,7 +93,6 @@ async function loadLetters() {
         return;
     }
 
-    cartas = data || [];
     lettersList.innerHTML = "";
 
     cartas.forEach((carta) => {
