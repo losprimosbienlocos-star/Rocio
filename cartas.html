@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartas</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="cartas.css">
+</head>
+<body>
+<button id="volver">Menu</button>
+
+<main class="letters-page">
+<section class="letters-hero">
+<p class="letters-kicker">Colección privada</p>
+<h1>Cartas para Rocio</h1>
+<p class="letters-copy">Cada carta vive en la nube. Tú escribes desde el panel privado y aquí solo aparecen las cartas publicadas.</p>
+</section>
+
+<section class="letters-layout">
+<aside class="letters-sidebar">
+<div class="letters-sidebar-head">
+<h2>Selecciona una carta</h2>
+<p id="lettersStatus">Cargando cartas...</p>
+</div>
+<div id="lettersList" class="letters-list"></div>
+</aside>
+
+<article class="letter-viewer">
+<div class="letter-paper">
+<p id="letterMeta" class="letter-meta">Elige una carta para empezar.</p>
+<h2 id="letterTitle" class="letter-title">Tus palabras aparecerán aquí</h2>
+<div id="letterContent" class="letter-content"></div>
+<button id="btnReplay" class="secondary-button" type="button" disabled>Repetir animación</button>
+</div>
+<div class="letter-glow"></div>
+</article>
+</section>
+</main>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="cartas.js"></script>
+</body>
+</html>

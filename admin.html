@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modo Autor</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<main class="admin-shell">
+<section id="authGate" class="admin-card auth-card">
+<p class="admin-kicker">Acceso privado</p>
+<h1>Modo autor</h1>
+<p class="admin-copy">Escribe tu PIN para administrar cartas. Ella solo verá las cartas publicadas en la parte romántica.</p>
+<label class="admin-label" for="pinInput">PIN</label>
+<input id="pinInput" class="admin-input" type="password" placeholder="Tu PIN secreto">
+<div class="admin-actions">
+<button id="btnUnlock" type="button">Entrar</button>
+</div>
+<p id="authMessage" class="admin-note">Este panel usa una API privada para guardar cartas en Supabase sin mostrar tu clave sensible.</p>
+</section>
+
+<section id="adminApp" class="admin-app is-hidden">
+<div class="admin-topbar">
+<div>
+<p class="admin-kicker">Panel privado</p>
+<h1>Gestor de cartas</h1>
+<p class="admin-copy">Desde aquí escribes, guardas, editas y publicas cartas en Supabase para que aparezcan en la vista romántica.</p>
+<p id="runtimeNote" class="admin-note">Conexión activa con Supabase mediante API privada.</p>
+</div>
+<div class="admin-top-actions">
+<button id="btnLock" class="ghost-button" type="button">Cerrar panel</button>
+<button id="btnGoLetters" class="ghost-button" type="button">Ver cartas</button>
+</div>
+</div>
+
+<section class="admin-grid">
+<aside class="admin-card admin-sidebar">
+<div class="sidebar-head">
+<h2>Cartas actuales</h2>
+<p id="adminStatus" class="admin-note">Cargando cartas...</p>
+</div>
+<div id="adminLettersList" class="admin-letters-list"></div>
+</aside>
+
+<section class="admin-card admin-editor">
+<div class="editor-head">
+<h2 id="editorHeading">Nueva carta</h2>
+<button id="btnNewLetter" class="ghost-button" type="button">Nueva carta</button>
+</div>
+
+<div class="admin-form-grid">
+<label class="admin-field">
+<span>Título</span>
+<input id="tituloInput" class="admin-input" type="text" placeholder="Mi carta favorita">
+</label>
+
+<label class="admin-field">
+<span>Slug</span>
+<input id="slugInput" class="admin-input" type="text" placeholder="mi-carta-favorita">
+</label>
+
+<label class="admin-field">
+<span>Fecha</span>
+<input id="fechaInput" class="admin-input" type="date">
+</label>
+
+<label class="admin-field">
+<span>Resumen</span>
+<input id="resumenInput" class="admin-input" type="text" placeholder="Una descripción corta para el menú">
+</label>
+
+<label class="admin-field">
+<span>Orden</span>
+<input id="ordenInput" class="admin-input" type="number" min="0" step="1" placeholder="1">
+</label>
+
+<label class="admin-field admin-toggle-field">
+<span>Publicada</span>
+<input id="publicadaInput" type="checkbox">
+</label>
+
+<label class="admin-field admin-field-full">
+<span>Contenido</span>
+<textarea id="contenidoInput" class="admin-textarea" placeholder="Escribe aquí la carta completa..."></textarea>
+</label>
+</div>
+
+<div class="admin-actions wrap">
+<button id="btnPreview" type="button">Vista previa</button>
+<button id="btnSaveProject" type="button">Guardar carta</button>
+<button id="btnDeleteLetter" class="ghost-button" type="button">Eliminar carta</button>
+</div>
+
+<div class="admin-preview-grid">
+<article class="admin-preview-card">
+<h3>Vista previa de la carta</h3>
+<p id="previewMeta" class="admin-note">Sin carta seleccionada</p>
+<h4 id="previewTitle">Tu carta aparecerá aquí</h4>
+<div id="previewContent" class="preview-content"></div>
+</article>
+
+<article class="admin-preview-card">
+<h3>Registro actual</h3>
+<pre id="jsonPreview" class="code-preview"></pre>
+</article>
+</div>
+
+<p id="saveMessage" class="admin-note"></p>
+</section>
+</section>
+</section>
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>

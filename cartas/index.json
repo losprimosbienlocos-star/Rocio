@@ -1,0 +1,18 @@
+{
+  "cartas": [
+    {
+      "slug": "primera-noche",
+      "titulo": "La primera noche que pense en ti",
+      "fecha": "30 de julio de 2026",
+      "resumen": "Una carta suave para abrir esta coleccion romantica.",
+      "archivo": "primera-noche.md"
+    },
+    {
+      "slug": "gracias-por-llegar",
+      "titulo": "Gracias por llegar",
+      "fecha": "30 de julio de 2026",
+      "resumen": "Otra carta lista para que la edites a tu manera.",
+      "archivo": "gracias-por-llegar.md"
+    }
+  ]
+}
