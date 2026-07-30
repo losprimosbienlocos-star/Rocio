@@ -1,9 +1,3 @@
-const { createClient } = supabase;
-const supabaseClient = createClient(
-    window.SUPABASE_CONFIG.url,
-    window.SUPABASE_CONFIG.anonKey
-);
-
 const lettersList = document.getElementById("lettersList");
 const lettersStatus = document.getElementById("lettersStatus");
 const letterMeta = document.getElementById("letterMeta");
@@ -84,22 +78,23 @@ function createLetterButton(carta) {
 async function loadLetters() {
     lettersStatus.textContent = "Cargando cartas...";
 
-    const { data, error } = await supabaseClient
-        .from("cartas")
-        .select("id, titulo, resumen, contenido, fecha, publicada, orden")
-        .eq("publicada", true)
-        .order("orden", { ascending: true })
-        .order("fecha", { ascending: false });
+    try {
+        const response = await fetch("/api/public-cartas");
+        const payload = await response.json().catch(() => ({}));
 
-    if (error) {
+        if (!response.ok) {
+            throw new Error(payload.error || "No pude cargar las cartas");
+        }
+
+        cartas = Array.isArray(payload.cartas) ? payload.cartas : [];
+    } catch (error) {
         lettersStatus.textContent = "No pude cargar las cartas";
         letterMeta.textContent = "Error";
-        letterTitle.textContent = "No pude leer la base de datos";
+        letterTitle.textContent = "No pude leer las cartas públicas";
         letterContent.textContent = error.message;
         return;
     }
 
-    cartas = Array.isArray(data) ? data : [];
     lettersList.innerHTML = "";
 
     cartas.forEach((carta) => {
@@ -115,7 +110,7 @@ async function loadLetters() {
 
     letterMeta.textContent = "Sin cartas";
     letterTitle.textContent = "Todavia no hay cartas publicadas";
-    letterContent.textContent = "Revisa que la carta en Supabase tenga publicada = true.";
+    letterContent.textContent = "Guarda una carta en el panel privado y marca publicada para verla aqui.";
     btnReplay.disabled = true;
 }
 
